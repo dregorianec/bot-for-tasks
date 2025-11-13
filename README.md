@@ -20,106 +20,106 @@
 
 ```mermaid
 graph TB
-    Start[/start] --> MainMenu[🎯 Главное меню]
+    Start["/start"] --> MainMenu["Главное меню"]
     
-    MainMenu --> TasksMenu[📋 Задачи]
-    MainMenu --> StatsMenu[📊 Статистика]
-    MainMenu --> SleepMenu[😴 Сон]
-    MainMenu --> MoodMenu[😊 Настроение]
-    MainMenu --> StepsMenu[👟 Шаги]
-    MainMenu --> SprintsMenu[🚀 Спринты]
+    MainMenu --> TasksMenu["Задачи"]
+    MainMenu --> StatsMenu["Статистика"]
+    MainMenu --> SleepMenu["Сон"]
+    MainMenu --> MoodMenu["Настроение"]
+    MainMenu --> StepsMenu["Шаги"]
+    MainMenu --> SprintsMenu["Спринты"]
     
     %% Меню задач
-    TasksMenu --> AddTaskMenu[➕ Добавить задачу]
-    TasksMenu --> TasksActive[📋 Активные задачи]
-    TasksMenu --> TasksDone[✅ Завершенные задачи]
-    TasksMenu --> TasksCancelled[❌ Отмененные задачи]
-    TasksMenu --> AddNote[📝 Добавить заметку]
-    TasksMenu --> CompleteTask[🏁 Завершить задачу]
-    TasksMenu --> CancelTask[🚫 Отменить задачу]
-    TasksMenu --> BackMain1[🔙 Назад]
+    TasksMenu --> AddTaskMenu["Добавить задачу"]
+    TasksMenu --> TasksActive["Активные задачи"]
+    TasksMenu --> TasksDone["Завершенные задачи"]
+    TasksMenu --> TasksCancelled["Отмененные задачи"]
+    TasksMenu --> AddNote["Добавить заметку"]
+    TasksMenu --> CompleteTask["Завершить задачу"]
+    TasksMenu --> CancelTask["Отменить задачу"]
+    TasksMenu --> BackMain1["Назад"]
     
     %% Добавление задачи
-    AddTaskMenu --> TaskTypeA[⚡ Тип A]
-    AddTaskMenu --> TaskTypeB[🔥 Тип B]
-    AddTaskMenu --> TaskTypeC[📦 Тип C]
-    AddTaskMenu --> TaskPurchase[🛒 Покупки]
-    AddTaskMenu --> TaskPermanent[🏷️ Постоянная D]
-    AddTaskMenu --> TaskTemporary[⏰ Временная]
-    AddTaskMenu --> BackMain2[🔙 Назад]
+    AddTaskMenu --> TaskTypeA["Тип A"]
+    AddTaskMenu --> TaskTypeB["Тип B"]
+    AddTaskMenu --> TaskTypeC["Тип C"]
+    AddTaskMenu --> TaskPurchase["Покупки"]
+    AddTaskMenu --> TaskPermanent["Постоянная D"]
+    AddTaskMenu --> TaskTemporary["Временная"]
+    AddTaskMenu --> BackMain2["Назад"]
     
-    TaskTypeA --> InputTaskText[📝 Ввод текста задачи]
+    TaskTypeA --> InputTaskText["Ввод текста задачи"]
     TaskTypeB --> InputTaskText
     TaskTypeC --> InputTaskText
     TaskPurchase --> InputTaskText
     TaskPermanent --> InputTaskText
-    TaskTemporary --> InputTaskDateTime[📅 Ввод даты/времени и текста]
+    TaskTemporary --> InputTaskDateTime["Ввод даты/времени и текста"]
     
-    InputTaskText --> TaskCreated[✅ Задача создана]
+    InputTaskText --> TaskCreated["Задача создана"]
     InputTaskDateTime --> TaskCreated
     TaskCreated --> MainMenu
     
     %% Работа с задачами
-    AddNote --> InputNoteText[📝 Ввод: номер + текст заметки]
-    CompleteTask --> InputTaskNumber[🔢 Ввод номера задачи]
+    AddNote --> InputNoteText["Ввод: номер + текст заметки"]
+    CompleteTask --> InputTaskNumber["Ввод номера задачи"]
     CancelTask --> InputTaskNumber
     
-    InputNoteText --> NoteAdded[✅ Заметка добавлена]
-    InputTaskNumber --> TaskCompleted[✅ Задача завершена]
-    InputTaskNumber --> TaskCancelled[❌ Задача отменена]
+    InputNoteText --> NoteAdded["Заметка добавлена"]
+    InputTaskNumber --> TaskCompleted["Задача завершена"]
+    InputTaskNumber --> TaskCancelled["Задача отменена"]
     
     NoteAdded --> MainMenu
     TaskCompleted --> MainMenu
     TaskCancelled --> MainMenu
     
     %% Меню статистики
-    StatsMenu --> StatsWeekly[📅 За неделю]
-    StatsMenu --> StatsAll[📈 За всё время]
-    StatsMenu --> StatsPermanent[🏷️ Постоянные задачи]
-    StatsMenu --> BackMain3[🔙 Назад]
+    StatsMenu --> StatsWeekly["За неделю"]
+    StatsMenu --> StatsAll["За всё время"]
+    StatsMenu --> StatsPermanent["Постоянные задачи"]
+    StatsMenu --> BackMain3["Назад"]
     
-    StatsWeekly --> WeeklyStats[📊 Статистика + графики]
-    StatsAll --> AllStats[📊 Статистика + графики]
-    StatsPermanent --> PermanentStats[📊 Статистика постоянных задач]
+    StatsWeekly --> WeeklyStats["Статистика + графики"]
+    StatsAll --> AllStats["Статистика + графики"]
+    StatsPermanent --> PermanentStats["Статистика постоянных задач"]
     
     WeeklyStats --> MainMenu
     AllStats --> MainMenu
     PermanentStats --> MainMenu
     
     %% Меню сна
-    SleepMenu --> SleepStart[😴 Начать сон]
-    SleepMenu --> SleepEnd[🌅 Проснуться]
-    SleepMenu --> BackMain4[🔙 Назад]
+    SleepMenu --> SleepStart["Начать сон"]
+    SleepMenu --> SleepEnd["Проснуться"]
+    SleepMenu --> BackMain4["Назад"]
     
-    SleepStart --> SleepRecorded[✅ Время засыпания записано]
-    SleepEnd --> WakeRecorded[✅ Время пробуждения записано]
+    SleepStart --> SleepRecorded["Время засыпания записано"]
+    SleepEnd --> WakeRecorded["Время пробуждения записано"]
     
     SleepRecorded --> MainMenu
     WakeRecorded --> MainMenu
     
     %% Меню настроения
-    MoodMenu --> MoodText[✍️ Записать настроение]
-    MoodMenu --> BackMain5[🔙 Назад]
+    MoodMenu --> MoodText["Записать настроение"]
+    MoodMenu --> BackMain5["Назад"]
     
-    MoodText --> InputMoodText[📝 Ввод текста настроения]
-    InputMoodText --> MoodRecorded[✅ Настроение записано]
+    MoodText --> InputMoodText["Ввод текста настроения"]
+    InputMoodText --> MoodRecorded["Настроение записано"]
     MoodRecorded --> MainMenu
     
     %% Меню шагов
-    StepsMenu --> InputSteps[🔢 Ввод количества шагов]
-    InputSteps --> StepsRecorded[✅ Шаги записаны]
+    StepsMenu --> InputSteps["Ввод количества шагов"]
+    InputSteps --> StepsRecorded["Шаги записаны"]
     StepsRecorded --> MainMenu
     
     %% Меню спринтов
-    SprintsMenu --> SprintStart[🚀 Начать спринт]
-    SprintsMenu --> SprintEnd[🏁 Завершить спринт]
-    SprintsMenu --> SprintsList[📋 Список спринтов]
-    SprintsMenu --> BackMain6[🔙 Назад]
+    SprintsMenu --> SprintStart["Начать спринт"]
+    SprintsMenu --> SprintEnd["Завершить спринт"]
+    SprintsMenu --> SprintsList["Список спринтов"]
+    SprintsMenu --> BackMain6["Назад"]
     
-    SprintStart --> InputSprintDesc[📝 Ввод описания спринта]
-    InputSprintDesc --> SprintStarted[✅ Спринт начат]
-    SprintEnd --> SprintFinished[✅ Спринт завершен]
-    SprintsList --> SprintsDisplayed[📋 Список спринтов]
+    SprintStart --> InputSprintDesc["Ввод описания спринта"]
+    InputSprintDesc --> SprintStarted["Спринт начат"]
+    SprintEnd --> SprintFinished["Спринт завершен"]
+    SprintsList --> SprintsDisplayed["Список спринтов"]
     
     SprintStarted --> MainMenu
     SprintFinished --> MainMenu
@@ -134,28 +134,28 @@ graph TB
     BackMain6 --> MainMenu
     
     %% Прямые команды
-    CmdTasks[/tasks] --> TasksActive
-    CmdDoneTasks[/done_tasks] --> TasksDone
-    CmdCancelledTasks[/cancelled_tasks] --> TasksCancelled
-    CmdDone[/done номер] --> TaskCompleted
-    CmdText[/text номер текст] --> NoteAdded
-    CmdWeekly[/weekly] --> WeeklyStats
-    CmdAll[/all] --> AllStats
-    CmdSprints[/sprints] --> SprintsDisplayed
-    CmdDaily[/daily] --> DailyReport
+    CmdTasks["/tasks"] --> TasksActive
+    CmdDoneTasks["/done_tasks"] --> TasksDone
+    CmdCancelledTasks["/cancelled_tasks"] --> TasksCancelled
+    CmdDone["/done номер"] --> TaskCompleted
+    CmdText["/text номер текст"] --> NoteAdded
+    CmdWeekly["/weekly"] --> WeeklyStats
+    CmdAll["/all"] --> AllStats
+    CmdSprints["/sprints"] --> SprintsDisplayed
+    CmdDaily["/daily"] --> DailyReport
     
     %% Ежедневный отчет
-    DailyReport[📅 Ежедневный отчет<br/>Автоматически в 6:00] --> DailyReportDisplay[📋 Список задач с кнопками]
-    DailyReportDisplay --> DailyCompleteTask[✅ Отметить задачу выполненной]
-    DailyReportDisplay --> DailyRefresh[🔄 Обновить статус]
+    DailyReport["Ежедневный отчет<br/>Автоматически в 6:00"] --> DailyReportDisplay["Список задач с кнопками"]
+    DailyReportDisplay --> DailyCompleteTask["Отметить задачу выполненной"]
+    DailyReportDisplay --> DailyRefresh["Обновить статус"]
     
     DailyCompleteTask --> DailyReportDisplay
     DailyRefresh --> DailyReportDisplay
     
     %% Напоминания
-    Reminder24h[⏰ Напоминание за 24ч] --> ReminderSent[📨 Сообщение отправлено]
-    Reminder3h[⏰ Напоминание за 3ч] --> ReminderSent
-    Reminder1h[⏰ Напоминание за 1ч] --> ReminderSent
+    Reminder24h["Напоминание за 24ч"] --> ReminderSent["Сообщение отправлено"]
+    Reminder3h["Напоминание за 3ч"] --> ReminderSent
+    Reminder1h["Напоминание за 1ч"] --> ReminderSent
     
     %% Стили
     classDef menuStyle fill:#e1f5ff,stroke:#01579b,stroke-width:2px
