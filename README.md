@@ -19,7 +19,7 @@
 Ниже представлена полная карта всех возможных взаимодействий с ботом. Она показывает, какие команды и кнопки куда ведут, и как пользователь может перемещаться по интерфейсу.
 
 ```mermaid
-graph TB
+graph TD
     Start["/start"] --> MainMenu["Главное меню"]
     
     MainMenu --> TasksMenu["Задачи"]
@@ -29,135 +29,131 @@ graph TB
     MainMenu --> StepsMenu["Шаги"]
     MainMenu --> SprintsMenu["Спринты"]
     
-    %% Меню задач
-    TasksMenu --> AddTaskMenu["Добавить задачу"]
-    TasksMenu --> TasksActive["Активные задачи"]
-    TasksMenu --> TasksDone["Завершенные задачи"]
-    TasksMenu --> TasksCancelled["Отмененные задачи"]
-    TasksMenu --> AddNote["Добавить заметку"]
-    TasksMenu --> CompleteTask["Завершить задачу"]
-    TasksMenu --> CancelTask["Отменить задачу"]
-    TasksMenu --> BackMain1["Назад"]
+    subgraph Tasks["📋 Задачи"]
+        direction TB
+        TasksMenu --> AddTask["Добавить задачу"]
+        TasksMenu --> ViewActive["Активные"]
+        TasksMenu --> ViewDone["Завершенные"]
+        TasksMenu --> ViewCancelled["Отмененные"]
+        TasksMenu --> AddNote["Добавить заметку"]
+        TasksMenu --> Complete["Завершить"]
+        TasksMenu --> Cancel["Отменить"]
+        
+        AddTask --> TypeA["Тип A"]
+        AddTask --> TypeB["Тип B"]
+        AddTask --> TypeC["Тип C"]
+        AddTask --> TypePurchase["Покупки"]
+        AddTask --> TypePerm["Постоянная D"]
+        AddTask --> TypeTemp["Временная"]
+        
+        TypeA --> InputText["Ввод текста"]
+        TypeB --> InputText
+        TypeC --> InputText
+        TypePurchase --> InputText
+        TypePerm --> InputText
+        TypeTemp --> InputDateTime["Ввод даты/времени"]
+        
+        InputText --> TaskCreated["✅ Задача создана"]
+        InputDateTime --> TaskCreated
+        
+        AddNote --> InputNote["Ввод: номер + текст"]
+        Complete --> InputNum["Ввод номера"]
+        Cancel --> InputNum
+        
+        InputNote --> NoteAdded["✅ Заметка добавлена"]
+        InputNum --> TaskDone["✅ Задача завершена"]
+        InputNum --> TaskCancelled["❌ Задача отменена"]
+    end
     
-    %% Добавление задачи
-    AddTaskMenu --> TaskTypeA["Тип A"]
-    AddTaskMenu --> TaskTypeB["Тип B"]
-    AddTaskMenu --> TaskTypeC["Тип C"]
-    AddTaskMenu --> TaskPurchase["Покупки"]
-    AddTaskMenu --> TaskPermanent["Постоянная D"]
-    AddTaskMenu --> TaskTemporary["Временная"]
-    AddTaskMenu --> BackMain2["Назад"]
+    subgraph Stats["📊 Статистика"]
+        direction TB
+        StatsMenu --> Weekly["За неделю"]
+        StatsMenu --> All["За всё время"]
+        StatsMenu --> PermStats["Постоянные задачи"]
+        
+        Weekly --> WeeklyResult["📊 Статистика + графики"]
+        All --> AllResult["📊 Статистика + графики"]
+        PermStats --> PermResult["📊 Статистика"]
+    end
     
-    TaskTypeA --> InputTaskText["Ввод текста задачи"]
-    TaskTypeB --> InputTaskText
-    TaskTypeC --> InputTaskText
-    TaskPurchase --> InputTaskText
-    TaskPermanent --> InputTaskText
-    TaskTemporary --> InputTaskDateTime["Ввод даты/времени и текста"]
+    subgraph Sleep["😴 Сон"]
+        direction TB
+        SleepMenu --> StartSleep["Начать сон"]
+        SleepMenu --> EndSleep["Проснуться"]
+        
+        StartSleep --> SleepRec["✅ Записано"]
+        EndSleep --> WakeRec["✅ Записано"]
+    end
     
-    InputTaskText --> TaskCreated["Задача создана"]
-    InputTaskDateTime --> TaskCreated
+    subgraph Mood["😊 Настроение"]
+        direction TB
+        MoodMenu --> WriteMood["Записать"]
+        WriteMood --> InputMood["Ввод текста"]
+        InputMood --> MoodRec["✅ Записано"]
+    end
+    
+    subgraph Steps["👟 Шаги"]
+        direction TB
+        StepsMenu --> InputSteps["Ввод количества"]
+        InputSteps --> StepsRec["✅ Записано"]
+    end
+    
+    subgraph Sprints["🚀 Спринты"]
+        direction TB
+        SprintsMenu --> StartSprint["Начать"]
+        SprintsMenu --> EndSprint["Завершить"]
+        SprintsMenu --> ListSprints["Список"]
+        
+        StartSprint --> InputSprint["Ввод описания"]
+        InputSprint --> SprintStarted["✅ Начат"]
+        EndSprint --> SprintFinished["✅ Завершен"]
+        ListSprints --> SprintsList["📋 Список"]
+    end
+    
+    subgraph Commands["⌨️ Прямые команды"]
+        direction TB
+        CmdTasks["/tasks"] --> ViewActive
+        CmdDoneTasks["/done_tasks"] --> ViewDone
+        CmdCancelledTasks["/cancelled_tasks"] --> ViewCancelled
+        CmdDone["/done номер"] --> TaskDone
+        CmdText["/text номер текст"] --> NoteAdded
+        CmdWeekly["/weekly"] --> WeeklyResult
+        CmdAll["/all"] --> AllResult
+        CmdSprints["/sprints"] --> SprintsList
+        CmdDaily["/daily"] --> DailyReport
+    end
+    
+    subgraph Daily["📅 Ежедневный отчет"]
+        direction TB
+        DailyReport["Автоматически в 6:00"] --> DailyDisplay["Список задач"]
+        DailyDisplay --> DailyComplete["Отметить задачу"]
+        DailyDisplay --> DailyRefresh["Обновить статус"]
+        DailyComplete --> DailyDisplay
+        DailyRefresh --> DailyDisplay
+    end
+    
+    subgraph Reminders["🔔 Напоминания"]
+        direction TB
+        Reminder24h["За 24ч"] --> ReminderSent["📨 Отправлено"]
+        Reminder3h["За 3ч"] --> ReminderSent
+        Reminder1h["За 1ч"] --> ReminderSent
+    end
+    
     TaskCreated --> MainMenu
-    
-    %% Работа с задачами
-    AddNote --> InputNoteText["Ввод: номер + текст заметки"]
-    CompleteTask --> InputTaskNumber["Ввод номера задачи"]
-    CancelTask --> InputTaskNumber
-    
-    InputNoteText --> NoteAdded["Заметка добавлена"]
-    InputTaskNumber --> TaskCompleted["Задача завершена"]
-    InputTaskNumber --> TaskCancelled["Задача отменена"]
-    
     NoteAdded --> MainMenu
-    TaskCompleted --> MainMenu
+    TaskDone --> MainMenu
     TaskCancelled --> MainMenu
-    
-    %% Меню статистики
-    StatsMenu --> StatsWeekly["За неделю"]
-    StatsMenu --> StatsAll["За всё время"]
-    StatsMenu --> StatsPermanent["Постоянные задачи"]
-    StatsMenu --> BackMain3["Назад"]
-    
-    StatsWeekly --> WeeklyStats["Статистика + графики"]
-    StatsAll --> AllStats["Статистика + графики"]
-    StatsPermanent --> PermanentStats["Статистика постоянных задач"]
-    
-    WeeklyStats --> MainMenu
-    AllStats --> MainMenu
-    PermanentStats --> MainMenu
-    
-    %% Меню сна
-    SleepMenu --> SleepStart["Начать сон"]
-    SleepMenu --> SleepEnd["Проснуться"]
-    SleepMenu --> BackMain4["Назад"]
-    
-    SleepStart --> SleepRecorded["Время засыпания записано"]
-    SleepEnd --> WakeRecorded["Время пробуждения записано"]
-    
-    SleepRecorded --> MainMenu
-    WakeRecorded --> MainMenu
-    
-    %% Меню настроения
-    MoodMenu --> MoodText["Записать настроение"]
-    MoodMenu --> BackMain5["Назад"]
-    
-    MoodText --> InputMoodText["Ввод текста настроения"]
-    InputMoodText --> MoodRecorded["Настроение записано"]
-    MoodRecorded --> MainMenu
-    
-    %% Меню шагов
-    StepsMenu --> InputSteps["Ввод количества шагов"]
-    InputSteps --> StepsRecorded["Шаги записаны"]
-    StepsRecorded --> MainMenu
-    
-    %% Меню спринтов
-    SprintsMenu --> SprintStart["Начать спринт"]
-    SprintsMenu --> SprintEnd["Завершить спринт"]
-    SprintsMenu --> SprintsList["Список спринтов"]
-    SprintsMenu --> BackMain6["Назад"]
-    
-    SprintStart --> InputSprintDesc["Ввод описания спринта"]
-    InputSprintDesc --> SprintStarted["Спринт начат"]
-    SprintEnd --> SprintFinished["Спринт завершен"]
-    SprintsList --> SprintsDisplayed["Список спринтов"]
-    
+    WeeklyResult --> MainMenu
+    AllResult --> MainMenu
+    PermResult --> MainMenu
+    SleepRec --> MainMenu
+    WakeRec --> MainMenu
+    MoodRec --> MainMenu
+    StepsRec --> MainMenu
     SprintStarted --> MainMenu
     SprintFinished --> MainMenu
-    SprintsDisplayed --> MainMenu
+    SprintsList --> MainMenu
     
-    %% Возврат в главное меню
-    BackMain1 --> MainMenu
-    BackMain2 --> MainMenu
-    BackMain3 --> MainMenu
-    BackMain4 --> MainMenu
-    BackMain5 --> MainMenu
-    BackMain6 --> MainMenu
-    
-    %% Прямые команды
-    CmdTasks["/tasks"] --> TasksActive
-    CmdDoneTasks["/done_tasks"] --> TasksDone
-    CmdCancelledTasks["/cancelled_tasks"] --> TasksCancelled
-    CmdDone["/done номер"] --> TaskCompleted
-    CmdText["/text номер текст"] --> NoteAdded
-    CmdWeekly["/weekly"] --> WeeklyStats
-    CmdAll["/all"] --> AllStats
-    CmdSprints["/sprints"] --> SprintsDisplayed
-    CmdDaily["/daily"] --> DailyReport
-    
-    %% Ежедневный отчет
-    DailyReport["Ежедневный отчет<br/>Автоматически в 6:00"] --> DailyReportDisplay["Список задач с кнопками"]
-    DailyReportDisplay --> DailyCompleteTask["Отметить задачу выполненной"]
-    DailyReportDisplay --> DailyRefresh["Обновить статус"]
-    
-    DailyCompleteTask --> DailyReportDisplay
-    DailyRefresh --> DailyReportDisplay
-    
-    %% Напоминания
-    Reminder24h["Напоминание за 24ч"] --> ReminderSent["Сообщение отправлено"]
-    Reminder3h["Напоминание за 3ч"] --> ReminderSent
-    Reminder1h["Напоминание за 1ч"] --> ReminderSent
-    
-    %% Стили
     classDef menuStyle fill:#e1f5ff,stroke:#01579b,stroke-width:2px
     classDef actionStyle fill:#fff3e0,stroke:#e65100,stroke-width:2px
     classDef inputStyle fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
@@ -165,9 +161,9 @@ graph TB
     classDef commandStyle fill:#fff9c4,stroke:#f57f17,stroke-width:2px
     
     class MainMenu,TasksMenu,StatsMenu,SleepMenu,MoodMenu,StepsMenu,SprintsMenu menuStyle
-    class AddTaskMenu,TasksActive,TasksDone,TasksCancelled,AddNote,CompleteTask,CancelTask actionStyle
-    class InputTaskText,InputTaskDateTime,InputNoteText,InputTaskNumber,InputMoodText,InputSteps,InputSprintDesc inputStyle
-    class TaskCreated,NoteAdded,TaskCompleted,TaskCancelled,WeeklyStats,AllStats,PermanentStats resultStyle
+    class AddTask,ViewActive,ViewDone,ViewCancelled,AddNote,Complete,Cancel,StartSleep,EndSleep,WriteMood,StartSprint,EndSprint,ListSprints actionStyle
+    class InputText,InputDateTime,InputNote,InputNum,InputMood,InputSteps,InputSprint inputStyle
+    class TaskCreated,NoteAdded,TaskDone,TaskCancelled,WeeklyResult,AllResult,PermResult,SleepRec,WakeRec,MoodRec,StepsRec,SprintStarted,SprintFinished,SprintsList resultStyle
     class CmdTasks,CmdDoneTasks,CmdCancelledTasks,CmdDone,CmdText,CmdWeekly,CmdAll,CmdSprints,CmdDaily commandStyle
 ```
 
